@@ -78,6 +78,8 @@ export default function Home() {
 
 	const { isLoading, data } = useQuery<ICharacter>(["allCharacter"], fetchCharacter);
 
+  const Character = data ? data.sort(() => Math.random() - 0.5) : [];
+
 	return (
 		<>
 			{
@@ -85,11 +87,18 @@ export default function Home() {
 				<div>loading....</div> 
 				: 
 				<ListWrap>
-					{data?.slice(0,100).map((c)=>
+					{Character?.slice(0,100).map((c)=>
 						<List key={c.id}>
 							<Link to={`/character/${c.id}`}>
 								<ImgWrap>
-									<img src={c.imageUrl} alt={c.name} />
+									<img src={
+                    c.imageUrl === undefined
+                    ? "https://cdn-images-1.medium.com/max/1600/1*Z_J0TYccherWHqCJanQD1A.jpeg"
+                    : c.imageUrl ===
+                      "https://static.wikia.nocookie.net/disney/images/7/7c/Noimage.png"
+                    ? "https://cdn-images-1.medium.com/max/1600/1*Z_J0TYccherWHqCJanQD1A.jpeg"
+                    : c.imageUrl
+                  } alt={c.name} />
 								</ImgWrap>
 								<CharName>{c.name}</CharName>
 							</Link>

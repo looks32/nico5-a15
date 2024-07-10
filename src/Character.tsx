@@ -83,7 +83,7 @@ const PopInner = styled.div`
   }
 
   @media (max-width: 600px){
-	width: 100%;
+	  width: 100%;
   }
 `;
 
@@ -116,6 +116,7 @@ export default function Character() {
 	const { isLoading, data } = useQuery({
 		queryKey: ["charDetail", characterId],
 		queryFn: () => fetchDetail(characterId),
+    staleTime: 300000,
 	});
 
 	return (
@@ -126,7 +127,11 @@ export default function Character() {
 			<div>
 				<PopInner>
 					<ImgWrap>
-						<img src={data.imageUrl} alt={data.name} />
+						<img src={
+              data.imageUrl === undefined
+              ? "https://cdn-images-1.medium.com/max/1600/1*Z_J0TYccherWHqCJanQD1A.jpeg"
+              : data.imageUrl
+            } alt={data.name} />
 					</ImgWrap>
 					<Tit>{data.name}</Tit>
 					<p>
